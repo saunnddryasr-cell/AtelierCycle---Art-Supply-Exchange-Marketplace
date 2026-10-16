@@ -4,7 +4,12 @@ dist/
 coverage/
 .DS_Store
 *.log
+<<<<<<< HEAD
 bun.lock
 .env*
 !.env.example
 !.env.production
+=======
+.env*
+!.env.example
+>>>>>>> 46341752947eafd33ad634b7155336c5360a0c8c

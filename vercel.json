@@ -1,6 +1,9 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "installCommand": "npm install --legacy-peer-deps",
+=======
+>>>>>>> 46341752947eafd33ad634b7155336c5360a0c8c
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",

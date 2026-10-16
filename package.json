@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
+<<<<<<< HEAD
     "build": "npx --yes vite build",
+=======
+    "build": "vite build",
+>>>>>>> 46341752947eafd33ad634b7155336c5360a0c8c
     "preview": "vite preview",
     "start": "tsx server.ts",
     "clean": "rm -rf dist server.js",
@@ -28,7 +32,11 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.4.21",
+<<<<<<< HEAD
     "esbuild": "^0.28.0",
+=======
+    "esbuild": "^0.25.0",
+>>>>>>> 46341752947eafd33ad634b7155336c5360a0c8c
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",
