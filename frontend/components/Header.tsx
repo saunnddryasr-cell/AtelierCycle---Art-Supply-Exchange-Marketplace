@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowLeftRight, CheckCircle2, MessageSquare, Plus, RefreshCw, ShieldCheck, Store, User } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { getApiBaseUrl } from '../services/api';
+import { ApiConfigModal } from './ApiConfigModal';
 
 export const Header: React.FC = () => {
   const {
@@ -17,6 +19,7 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isApiModalOpen, setIsApiModalOpen] = useState(false);
 
   const handleManualSync = async () => {
     setIsRefreshing(true);
@@ -121,8 +124,8 @@ export const Header: React.FC = () => {
           
           {/* Live API sync status button */}
           <button
-            onClick={handleManualSync}
-            title={`Backend API: ${isBackendConnected ? 'Connected & Synchronized' : 'Local Fallback'}. Click to re-sync.`}
+            onClick={() => setIsApiModalOpen(true)}
+            title={`Backend API: ${isBackendConnected ? 'Connected (200 OK)' : 'Reconnecting'} · Click to view details or change URL.`}
             className={`hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors border ${
               isBackendConnected
                 ? 'bg-emerald-50/80 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
@@ -213,6 +216,12 @@ export const Header: React.FC = () => {
           <span>Admin</span>
         </button>
       </div>
+
+      {/* Backend API Configuration & Diagnostics Modal */}
+      <ApiConfigModal
+        isOpen={isApiModalOpen}
+        onClose={() => setIsApiModalOpen(false)}
+      />
     </header>
   );
 };

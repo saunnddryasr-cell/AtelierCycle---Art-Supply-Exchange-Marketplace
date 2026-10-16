@@ -14,6 +14,17 @@ export async function createBackendApp() {
 
   app.use(express.json({ limit: '10mb' }));
 
+  // CORS support for cross-origin frontend-backend deployments (e.g. Vercel)
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    next();
+  });
+
   // API logging
   app.use('/api', (req, res, next) => {
     console.log(`[Backend API] ${req.method} ${req.url}`);

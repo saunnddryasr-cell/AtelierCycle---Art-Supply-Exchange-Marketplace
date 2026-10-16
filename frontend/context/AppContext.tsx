@@ -361,7 +361,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     let offerTitle = offeredCustomTitle || 'Custom Studio Materials Lot';
     let offerValue = offeredCustomValue || targetProduct.price;
-    let offerImage = '/src/assets/images/hero_art_materials_studio_1791822503385.jpg';
+    let offerImage = '/frontend/assets/images/hero_art_materials_studio_1791822503385.jpg';
 
     if (offeredProductId) {
       const myProduct = products.find((p) => p.id === offeredProductId);

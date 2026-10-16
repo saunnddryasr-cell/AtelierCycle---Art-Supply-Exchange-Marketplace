@@ -25,19 +25,19 @@ const CONDITIONS: ProductCondition[] = [
 const PRESET_STUDIO_IMAGES = [
   {
     name: 'Oil Paint Palette & Tubes',
-    url: '/src/assets/images/art_oil_paint_set_1791822520887.jpg',
+    url: '/frontend/assets/images/art_oil_paint_set_1791822520887.jpg',
   },
   {
     name: 'Kolinsky Sable Brushes Roll',
-    url: '/src/assets/images/art_sable_brush_bundle_1791822539044.jpg',
+    url: '/frontend/assets/images/art_sable_brush_bundle_1791822539044.jpg',
   },
   {
     name: 'Belgian Linen & Beech Easel',
-    url: '/src/assets/images/art_stretched_canvas_easel_1791822554143.jpg',
+    url: '/frontend/assets/images/art_stretched_canvas_easel_1791822554143.jpg',
   },
   {
     name: 'Studio Workbench Materials',
-    url: '/src/assets/images/hero_art_materials_studio_1791822503385.jpg',
+    url: '/frontend/assets/images/hero_art_materials_studio_1791822503385.jpg',
   },
 ];
 

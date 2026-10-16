@@ -5,7 +5,7 @@ import {
   INITIAL_PRODUCTS,
   INITIAL_SWAP_OFFERS,
   INITIAL_USERS,
-} from '../../src/data/mockData';
+} from './mockData';
 import {
   ArtProduct,
   ChatConversation,

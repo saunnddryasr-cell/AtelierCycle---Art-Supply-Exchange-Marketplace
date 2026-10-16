@@ -153,7 +153,7 @@ export const Marketplace: React.FC = () => {
           {/* Right Image Column */}
           <div className="lg:col-span-5 relative min-h-[280px] lg:min-h-full">
             <img
-              src="/src/assets/images/hero_art_materials_studio_1791822503385.jpg"
+              src="/frontend/assets/images/hero_art_materials_studio_1791822503385.jpg"
               alt="Authentic artist studio workbench with paints and brushes"
               className="w-full h-full object-cover object-center"
               referrerPolicy="no-referrer"

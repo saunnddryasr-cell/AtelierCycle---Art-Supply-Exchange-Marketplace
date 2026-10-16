@@ -8,10 +8,87 @@ import {
   UserProfile,
 } from '../types';
 
-const BASE_URL = '/api';
+export const DEFAULT_VERCEL_BACKEND_URL =
+  'https://ateliercycle-art-supply-exchange-marketplace-backend-5nv3xb24a.vercel.app';
+
+export function getApiBaseUrl(): string {
+  // 1. User manual override stored in localStorage
+  if (typeof window !== 'undefined') {
+    const userOverride = localStorage.getItem('ateliercycle_api_url');
+    if (userOverride && userOverride.trim()) {
+      const trimmed = userOverride.trim();
+      return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+    }
+  }
+
+  // 2. Explicit environment variable override
+  if (import.meta.env.VITE_BACKEND_URL) {
+    const raw = (import.meta.env.VITE_BACKEND_URL as string).trim();
+    return raw.endsWith('/api') ? raw : `${raw}/api`;
+  }
+
+  // 3. Same-origin relative path for local development, AI Studio preview, and Vercel single-project deployments
+  return '/api';
+}
+
+export function setCustomApiBaseUrl(url: string | null) {
+  if (typeof window !== 'undefined') {
+    if (url && url.trim()) {
+      localStorage.setItem('ateliercycle_api_url', url.trim());
+    } else {
+      localStorage.removeItem('ateliercycle_api_url');
+    }
+  }
+}
+
+export async function testApiEndpoint(targetBaseUrl?: string): Promise<{
+  success: boolean;
+  latencyMs?: number;
+  statusText?: string;
+  data?: any;
+  error?: string;
+}> {
+  const base = targetBaseUrl !== undefined ? targetBaseUrl : getApiBaseUrl();
+  const normalized = base.endsWith('/api') ? base : `${base}/api`;
+  const url = `${normalized}/health`;
+  const start = performance.now();
+
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+    });
+    const latencyMs = Math.round(performance.now() - start);
+
+    if (!res.ok) {
+      return {
+        success: false,
+        latencyMs,
+        statusText: `HTTP ${res.status} ${res.statusText}`,
+        error: `Server returned status ${res.status}`,
+      };
+    }
+
+    const data = await res.json();
+    return {
+      success: true,
+      latencyMs,
+      statusText: 'Connected (200 OK)',
+      data,
+    };
+  } catch (err: any) {
+    const latencyMs = Math.round(performance.now() - start);
+    return {
+      success: false,
+      latencyMs,
+      error: err.message || 'Network request failed (possibly blocked by CORS or SSO redirect)',
+    };
+  }
+}
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const url = `${BASE_URL}${endpoint}`;
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}${endpoint}`;
   try {
     const res = await fetch(url, {
       headers: {
