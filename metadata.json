@@ -1,0 +1,6 @@
+{
+  "name": "AtelierCycle - Art Supply Exchange & Marketplace",
+  "description": "A circular second-hand marketplace connecting art students, hobbyists, and professional artists to buy, sell, and swap unused materials.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
