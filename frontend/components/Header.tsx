@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { ArrowLeftRight, CheckCircle2, MessageSquare, Plus, RefreshCw, ShieldCheck, Store, User } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { getApiBaseUrl } from '../services/api';
+<<<<<<< HEAD
 import { ApiConfigModal } from './ApiConfigModal';
+=======
+>>>>>>> 0097d09 (Initial commit: AtelierCycle Marketplace)
 
 export const Header: React.FC = () => {
   const {
@@ -19,7 +22,10 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+<<<<<<< HEAD
   const [isApiModalOpen, setIsApiModalOpen] = useState(false);
+=======
+>>>>>>> 0097d09 (Initial commit: AtelierCycle Marketplace)
 
   const handleManualSync = async () => {
     setIsRefreshing(true);
@@ -124,8 +130,13 @@ export const Header: React.FC = () => {
           
           {/* Live API sync status button */}
           <button
+<<<<<<< HEAD
             onClick={() => setIsApiModalOpen(true)}
             title={`Backend API: ${isBackendConnected ? 'Connected (200 OK)' : 'Reconnecting'} · Click to view details or change URL.`}
+=======
+            onClick={handleManualSync}
+            title={`Backend API: ${isBackendConnected ? 'Connected' : 'Reconnecting'} · Endpoint: ${getApiBaseUrl() || '/api'}. Click to re-sync.`}
+>>>>>>> 0097d09 (Initial commit: AtelierCycle Marketplace)
             className={`hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors border ${
               isBackendConnected
                 ? 'bg-emerald-50/80 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
@@ -216,12 +227,15 @@ export const Header: React.FC = () => {
           <span>Admin</span>
         </button>
       </div>
+<<<<<<< HEAD
 
       {/* Backend API Configuration & Diagnostics Modal */}
       <ApiConfigModal
         isOpen={isApiModalOpen}
         onClose={() => setIsApiModalOpen(false)}
       />
+=======
+>>>>>>> 0097d09 (Initial commit: AtelierCycle Marketplace)
     </header>
   );
 };

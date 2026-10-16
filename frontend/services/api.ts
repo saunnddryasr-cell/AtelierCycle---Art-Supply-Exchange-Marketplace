@@ -8,6 +8,7 @@ import {
   UserProfile,
 } from '../types';
 
+<<<<<<< HEAD
 export const DEFAULT_VERCEL_BACKEND_URL =
   'https://ateliercycle-art-supply-exchange-marketplace-backend-5nv3xb24a.vercel.app';
 
@@ -22,11 +23,19 @@ export function getApiBaseUrl(): string {
   }
 
   // 2. Explicit environment variable override
+=======
+export const VERCEL_BACKEND_URL =
+  'https://ateliercycle-art-supply-exchange-marketplace-backend-5nv3xb24a.vercel.app';
+
+export function getApiBaseUrl(): string {
+  // 1. Explicit environment variable override
+>>>>>>> 0097d09 (Initial commit: AtelierCycle Marketplace)
   if (import.meta.env.VITE_BACKEND_URL) {
     const raw = (import.meta.env.VITE_BACKEND_URL as string).trim();
     return raw.endsWith('/api') ? raw : `${raw}/api`;
   }
 
+<<<<<<< HEAD
   // 3. Same-origin relative path for local development, AI Studio preview, and Vercel single-project deployments
   return '/api';
 }
@@ -86,6 +95,17 @@ export async function testApiEndpoint(targetBaseUrl?: string): Promise<{
   }
 }
 
+=======
+  // 2. If frontend is hosted on Vercel, connect to Vercel backend deployment
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+    return `${VERCEL_BACKEND_URL}/api`;
+  }
+
+  // 3. Default to relative path for local development & AI Studio preview
+  return '/api';
+}
+
+>>>>>>> 0097d09 (Initial commit: AtelierCycle Marketplace)
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const baseUrl = getApiBaseUrl();
   const url = `${baseUrl}${endpoint}`;
