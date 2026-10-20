@@ -10,6 +10,7 @@ import {
   Store,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { getFallbackForCategory, resolveArtImage } from '../utils/imageHelper';
 
 export const ChatInbox: React.FC = () => {
   const {
@@ -170,9 +171,11 @@ export const ChatInbox: React.FC = () => {
               {linkedProduct && (
                 <div className="flex items-center gap-2 bg-stone-50 border border-stone-200 rounded-lg p-1.5 pl-2 max-w-[280px]">
                   <img
-                    src={linkedProduct.images[0]}
+                    src={resolveArtImage(linkedProduct.images[0], linkedProduct.category)}
                     alt={linkedProduct.title}
-                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = getFallbackForCategory(linkedProduct.category);
+                    }}
                     className="w-8 h-8 rounded object-cover shrink-0"
                   />
                   <div className="min-w-0 text-left">

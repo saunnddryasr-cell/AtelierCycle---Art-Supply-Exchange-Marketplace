@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeftRight, Heart, MapPin, Tag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ArtProduct } from '../types';
+import { getFallbackForCategory, resolveArtImage } from '../utils/imageHelper';
 
 interface ProductCardProps {
   product: ArtProduct;
@@ -9,7 +10,8 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { setSelectedProduct, openSwapModal, toggleSaveProduct, savedProductIds, users } = useApp();
-  const [imageError, setImageError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(() => resolveArtImage(product.images[0], product.category));
+  const [hasError, setHasError] = useState(false);
 
   const isSaved = savedProductIds.includes(product.id);
   const seller = users.find((u) => u.id === product.sellerId);
@@ -31,12 +33,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     >
       {/* Visual Slot: Product Image */}
       <div className="relative aspect-4/3 w-full bg-stone-100 overflow-hidden">
-        {!imageError && product.images[0] ? (
+        {!hasError ? (
           <img
-            src={product.images[0]}
+            src={imgSrc}
             alt={product.title}
-            onError={() => setImageError(true)}
-            referrerPolicy="no-referrer"
+            onError={() => {
+              const fallback = getFallbackForCategory(product.category);
+              if (imgSrc !== fallback) {
+                setImgSrc(fallback);
+              } else {
+                setHasError(true);
+              }
+            }}
+            loading="lazy"
             className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
           />
         ) : (

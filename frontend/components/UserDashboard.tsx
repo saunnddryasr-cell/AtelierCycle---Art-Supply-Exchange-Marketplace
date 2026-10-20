@@ -13,6 +13,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { getFallbackForCategory, resolveArtImage } from '../utils/imageHelper';
 import { ArtProduct } from '../types';
 import { ProductCard } from './ProductCard';
 
@@ -277,9 +278,11 @@ export const UserDashboard: React.FC = () => {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={order.productImage}
+                    src={resolveArtImage(order.productImage)}
                     alt={order.productTitle}
-                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = getFallbackForCategory();
+                    }}
                     className="w-12 h-12 rounded-lg object-cover border border-stone-200 shrink-0"
                   />
                   <div>

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SwapOffer, SwapStatus } from '../types';
+import { getFallbackForCategory, resolveArtImage } from '../utils/imageHelper';
 
 export const SwapHub: React.FC = () => {
   const {
@@ -143,10 +144,12 @@ export const SwapHub: React.FC = () => {
                 {/* Requested Item (The item owned by offer.ownerId) */}
                 <div className="md:col-span-5 flex items-center gap-3 p-3 bg-stone-50 rounded-lg border border-stone-200/80">
                   <img
-                    src={offer.requestedProductImage}
+                    src={resolveArtImage(offer.requestedProductImage)}
                     alt={offer.requestedProductTitle}
+                    onError={(e) => {
+                      e.currentTarget.src = getFallbackForCategory();
+                    }}
                     className="w-16 h-16 rounded-md object-cover border border-stone-200 shrink-0"
-                    referrerPolicy="no-referrer"
                   />
                   <div className="flex-1 min-w-0">
                     <span className="text-[11px] font-semibold uppercase text-stone-400 block tracking-wider">
@@ -174,10 +177,12 @@ export const SwapHub: React.FC = () => {
                 {/* Offered Item (The item proposed in exchange) */}
                 <div className="md:col-span-5 flex items-center gap-3 p-3 bg-stone-50 rounded-lg border border-stone-200/80">
                   <img
-                    src={offer.offeredProductImage}
+                    src={resolveArtImage(offer.offeredProductImage)}
                     alt={offer.offeredProductTitle}
+                    onError={(e) => {
+                      e.currentTarget.src = getFallbackForCategory();
+                    }}
                     className="w-16 h-16 rounded-md object-cover border border-stone-200 shrink-0"
-                    referrerPolicy="no-referrer"
                   />
                   <div className="flex-1 min-w-0">
                     <span className="text-[11px] font-semibold uppercase text-amber-800 block tracking-wider">

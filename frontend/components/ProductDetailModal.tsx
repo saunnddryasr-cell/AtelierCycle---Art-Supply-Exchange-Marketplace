@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { getFallbackForCategory, resolveArtImage } from '../utils/imageHelper';
 
 export const ProductDetailModal: React.FC = () => {
   const {
@@ -90,9 +91,11 @@ export const ProductDetailModal: React.FC = () => {
             {/* Main Featured Image */}
             <div className="aspect-4/3 rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
               <img
-                src={selectedProduct.images[activeImageIndex] || selectedProduct.images[0]}
+                src={resolveArtImage(selectedProduct.images[activeImageIndex] || selectedProduct.images[0], selectedProduct.category)}
                 alt={selectedProduct.title}
-                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.src = getFallbackForCategory(selectedProduct.category);
+                }}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -109,10 +112,12 @@ export const ProductDetailModal: React.FC = () => {
                     }`}
                   >
                     <img
-                      src={img}
+                      src={resolveArtImage(img, selectedProduct.category)}
                       alt={`Thumbnail ${idx + 1}`}
                       className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.src = getFallbackForCategory(selectedProduct.category);
+                      }}
                     />
                   </button>
                 ))}

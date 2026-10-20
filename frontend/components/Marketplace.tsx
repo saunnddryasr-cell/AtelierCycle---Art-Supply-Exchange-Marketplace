@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeftRight, Filter, RotateCcw, Search, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { FilterState, ProductCategory } from '../types';
+import { FALLBACK_IMAGES, LOCAL_IMAGES } from '../utils/imageHelper';
 import { InstitutionalBanner } from './InstitutionalBanner';
 import { ProductCard } from './ProductCard';
 
@@ -36,6 +37,7 @@ const CONDITIONS = [
 
 export const Marketplace: React.FC = () => {
   const { products, filterState, setFilterState, openCreateListing } = useApp();
+  const [heroImgSrc, setHeroImgSrc] = useState(LOCAL_IMAGES.hero);
 
   // Apply filters & search & sorting
   const filteredProducts = products.filter((item) => {
@@ -153,10 +155,10 @@ export const Marketplace: React.FC = () => {
           {/* Right Image Column */}
           <div className="lg:col-span-5 relative min-h-[280px] lg:min-h-full">
             <img
-              src="/frontend/assets/images/hero_art_materials_studio_1791822503385.jpg"
+              src={heroImgSrc}
               alt="Authentic artist studio workbench with paints and brushes"
               className="w-full h-full object-cover object-center"
-              referrerPolicy="no-referrer"
+              onError={() => setHeroImgSrc(FALLBACK_IMAGES.hero)}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent lg:bg-gradient-to-r lg:from-stone-900/50 lg:to-transparent" />
           </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, MapPin, ShieldCheck, ShoppingBag, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { getFallbackForCategory, resolveArtImage } from '../utils/imageHelper';
 
 export const BuyModal: React.FC = () => {
   const { isBuyModalOpen, closeBuyModal, selectedProduct, currentUser, users, completePurchase } =
@@ -59,9 +60,11 @@ export const BuyModal: React.FC = () => {
           {/* Order Item Summary */}
           <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 flex items-center gap-3">
             <img
-              src={selectedProduct.images[0]}
+              src={resolveArtImage(selectedProduct.images[0], selectedProduct.category)}
               alt={selectedProduct.title}
-              referrerPolicy="no-referrer"
+              onError={(e) => {
+                e.currentTarget.src = getFallbackForCategory(selectedProduct.category);
+              }}
               className="w-14 h-14 rounded-lg object-cover border border-stone-200 shrink-0"
             />
             <div className="min-w-0 flex-1">
